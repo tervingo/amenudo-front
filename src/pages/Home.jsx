@@ -23,7 +23,7 @@ export function Home() {
         <div className="flex items-center gap-2">
           <UtensilsCrossed className="w-10 h-10" />
           <h1 className="text-3xl font-bold">Amenudo</h1>
-          <img src="/portada_2.jpg" alt="Amenudo" className="w-30 h-30" />
+          <img src="/portada_2.jpg" alt="Amenudo" className="w-50 h-50" />
         </div>
         <Button asChild>
           <Link to="/visitas/nueva">

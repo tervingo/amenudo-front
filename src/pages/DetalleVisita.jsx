@@ -126,6 +126,37 @@ export function DetalleVisita() {
         </div>
       )}
 
+      {visita.ponente && (
+        <p className="text-sm text-muted-foreground">
+          <span className="font-medium text-foreground">Ponente:</span> {visita.ponente}
+        </p>
+      )}
+
+      {(visita.menu?.foto || visita.menu?.descripcion || visita.menu?.precio != null) && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              Menú
+              {visita.menu.precio != null && (
+                <span className="text-base font-semibold">{visita.menu.precio.toFixed(1)} €</span>
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {visita.menu.foto && (
+              <img
+                src={visita.menu.foto.url}
+                alt="menú"
+                className="w-full max-h-64 object-contain rounded-md border"
+              />
+            )}
+            {visita.menu.descripcion && (
+              <p className="text-sm leading-relaxed whitespace-pre-wrap">{visita.menu.descripcion}</p>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       <Separator />
 
       {/* Puntuaciones */}

@@ -1,0 +1,65 @@
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Plus, Loader2, UtensilsCrossed } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { VisitaCard } from '@/components/VisitaCard'
+import { api } from '@/api/client'
+
+export function Home() {
+  const [visitas, setVisitas] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    api.getVisitas()
+      .then(setVisitas)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
+  }, [])
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <UtensilsCrossed className="w-6 h-6" />
+          <h1 className="text-2xl font-bold">Amenudo</h1>
+        </div>
+        <Button asChild>
+          <Link to="/visitas/nueva">
+            <Plus className="w-4 h-4 mr-1" /> Nueva visita
+          </Link>
+        </Button>
+      </div>
+
+      {loading && (
+        <div className="flex justify-center py-20">
+          <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+        </div>
+      )}
+
+      {error && (
+        <div className="text-center py-20 text-destructive">
+          Error al cargar las visitas: {error}
+        </div>
+      )}
+
+      {!loading && !error && visitas.length === 0 && (
+        <div className="text-center py-20 text-muted-foreground">
+          <UtensilsCrossed className="w-12 h-12 mx-auto mb-4 opacity-30" />
+          <p>Aún no hay visitas registradas.</p>
+          <Button asChild className="mt-4" variant="outline">
+            <Link to="/visitas/nueva">Añade la primera</Link>
+          </Button>
+        </div>
+      )}
+
+      {!loading && !error && visitas.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {visitas.map((v) => (
+            <VisitaCard key={v._id} visita={v} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}

@@ -14,6 +14,7 @@ import { api } from '@/api/client'
 const DEFAULT_FORM = {
   fecha: new Date().toISOString().split('T')[0],
   sitio: '',
+  dirección: '',
   asistentes: [],
   fotos: [],
   puntuacion_comida: 5,
@@ -46,6 +47,10 @@ export function VisitaForm() {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    if (form.asistentes.length < 2) {
+      setError('Debes seleccionar al menos 2 asistentes.')
+      return
+    }
     setSaving(true)
     setError(null)
     try {
@@ -91,6 +96,16 @@ export function VisitaForm() {
                 value={form.sitio}
                 onChange={(e) => set('sitio')(e.target.value)}
                 placeholder="Casa Pepe, La Taberna..."
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="dirección">Dirección</Label>
+              <Input
+                id="dirección"
+                value={form.dirección}
+                onChange={(e) => set('dirección')(e.target.value)}
+                placeholder="Calle, número, ciudad..."
               />
             </div>
 

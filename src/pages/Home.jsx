@@ -21,8 +21,9 @@ export function Home() {
     <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <UtensilsCrossed className="w-6 h-6" />
-          <h1 className="text-2xl font-bold">Amenudo</h1>
+          <UtensilsCrossed className="w-10 h-10" />
+          <h1 className="text-3xl font-bold">Amenudo</h1>
+          <img src="/portada_2.jpg" alt="Amenudo" className="w-30 h-30" />
         </div>
         <Button asChild>
           <Link to="/visitas/nueva">

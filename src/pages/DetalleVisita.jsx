@@ -69,7 +69,12 @@ export function DetalleVisita() {
           <Button variant="ghost" size="icon" asChild>
             <Link to="/"><ArrowLeft className="w-4 h-4" /></Link>
           </Button>
-          <h1 className="text-xl font-bold line-clamp-1">{visita.sitio}</h1>
+          <div>
+            <h1 className="text-xl font-bold line-clamp-1">{visita.sitio}</h1>
+            {visita.dirección && (
+              <p className="text-sm text-muted-foreground">{visita.dirección}</p>
+            )}
+          </div>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" asChild>

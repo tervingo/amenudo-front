@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Plus, Loader2, UtensilsCrossed, LogOut, ShieldCheck } from 'lucide-react'
+import { Plus, Loader2, UtensilsCrossed, LogOut, ShieldCheck, Sun, Moon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { VisitaCard } from '@/components/VisitaCard'
 import { AdminDialog } from '@/components/AdminDialog'
@@ -8,7 +8,7 @@ import { useAuth } from '@/context/AuthContext'
 import { api } from '@/api/client'
 
 export function Home() {
-  const { isAdmin, logout } = useAuth()
+  const { isAdmin, logout, theme, toggleTheme } = useAuth()
   const [showAdminDialog, setShowAdminDialog] = useState(false)
   const [visitas, setVisitas] = useState([])
   const [loading, setLoading] = useState(true)
@@ -32,6 +32,9 @@ export function Home() {
           <img src="/portada_2.jpg" alt="Amenudo" className="w-100 h-100 rounded-lg py-15" />
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" title="Cambiar tema" onClick={toggleTheme}>
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </Button>
           {isAdmin ? (
             <>
               <Button asChild>

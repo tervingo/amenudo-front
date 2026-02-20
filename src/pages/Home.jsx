@@ -12,7 +12,7 @@ export function Home() {
 
   useEffect(() => {
     api.getVisitas()
-      .then(setVisitas)
+      .then((data) => setVisitas(data.sort((a, b) => new Date(b.fecha) - new Date(a.fecha))))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [])

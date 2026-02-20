@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Pencil, Trash2, Loader2, Calendar, Users, Star } from 'lucide-react'
+import { useParams, Link } from 'react-router-dom'
+import { ArrowLeft, Pencil, Loader2, Calendar, Users, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -21,10 +21,8 @@ function ScoreCircle({ label, value, highlight }) {
 
 export function DetalleVisita() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const [visita, setVisita] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState(null)
 
   useEffect(() => {
@@ -33,18 +31,6 @@ export function DetalleVisita() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [id])
-
-  async function handleDelete() {
-    if (!confirm('¿Eliminar esta visita?')) return
-    setDeleting(true)
-    try {
-      await api.deleteVisita(id)
-      navigate('/')
-    } catch (err) {
-      setError(err.message)
-      setDeleting(false)
-    }
-  }
 
   if (loading) {
     return (
@@ -76,16 +62,11 @@ export function DetalleVisita() {
             )}
           </div>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" asChild>
-            <Link to={`/visitas/${id}/editar`}>
-              <Pencil className="w-3.5 h-3.5 mr-1" /> Editar
-            </Link>
-          </Button>
-          <Button variant="destructive" size="sm" onClick={handleDelete} disabled={deleting}>
-            {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
-          </Button>
-        </div>
+        <Button variant="outline" size="sm" asChild>
+          <Link to={`/visitas/${id}/editar`}>
+            <Pencil className="w-3.5 h-3.5 mr-1" /> Editar
+          </Link>
+        </Button>
       </div>
 
       {/* Fotos */}

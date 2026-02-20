@@ -19,11 +19,13 @@ export function Home() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <UtensilsCrossed className="w-10 h-10" />
-          <h1 className="text-3xl font-bold">Amenudo</h1>
-          <img src="/portada_2.jpg" alt="Amenudo" className="w-50 h-50" />
+      <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <UtensilsCrossed className="w-10 h-10" />
+            <h1 className="text-7xl font-bold">Amenudo</h1>
+          </div>
+          <img src="/portada_2.jpg" alt="Amenudo" className="w-100 h-100 rounded-lg py-15" />
         </div>
         <Button asChild>
           <Link to="/visitas/nueva">

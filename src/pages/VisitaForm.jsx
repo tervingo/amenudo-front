@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Loader2, Save } from 'lucide-react'
+import { ArrowLeft, Loader2, Save, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -36,6 +36,7 @@ export function VisitaForm() {
   const [form, setForm] = useState(DEFAULT_FORM)
   const [loading, setLoading] = useState(isEdit)
   const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState(null)
 
   useEffect(() => {
@@ -45,6 +46,18 @@ export function VisitaForm() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [id, isEdit])
+
+  async function handleDelete() {
+    if (!confirm('¿Eliminar esta visita? Esta acción no se puede deshacer.')) return
+    setDeleting(true)
+    try {
+      await api.deleteVisita(id)
+      navigate('/')
+    } catch (err) {
+      setError(err.message)
+      setDeleting(false)
+    }
+  }
 
   function set(field) {
     return (value) => setForm((prev) => ({ ...prev, [field]: value }))
@@ -204,14 +217,22 @@ export function VisitaForm() {
           <p className="text-sm text-destructive">{error}</p>
         )}
 
-        <div className="flex justify-end gap-3">
-          <Button type="button" variant="outline" asChild>
-            <Link to="/">Cancelar</Link>
-          </Button>
-          <Button type="submit" disabled={saving}>
-            {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-            {isEdit ? 'Guardar cambios' : 'Crear visita'}
-          </Button>
+        <div className="flex justify-between gap-3">
+          {isEdit && (
+            <Button type="button" variant="destructive" onClick={handleDelete} disabled={deleting}>
+              {deleting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Trash2 className="w-4 h-4 mr-2" />}
+              Eliminar visita
+            </Button>
+          )}
+          <div className="flex gap-3 ml-auto">
+            <Button type="button" variant="outline" asChild>
+              <Link to="/">Cancelar</Link>
+            </Button>
+            <Button type="submit" disabled={saving}>
+              {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+              {isEdit ? 'Guardar cambios' : 'Crear visita'}
+            </Button>
+          </div>
         </div>
       </form>
     </div>

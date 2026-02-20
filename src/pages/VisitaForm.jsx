@@ -11,6 +11,7 @@ import { FotoUpload } from '@/components/FotoUpload'
 import { AsistentesInput } from '@/components/AsistentesInput'
 import { MenuInput } from '@/components/MenuInput'
 import { api } from '@/api/client'
+import { useAuth } from '@/context/AuthContext'
 
 const PONENTES = ['Antonio', 'Jesús', 'Josep Lluís', 'Juan', 'Pepe']
 
@@ -32,6 +33,7 @@ export function VisitaForm() {
   const { id } = useParams()
   const navigate = useNavigate()
   const isEdit = Boolean(id)
+  const { isAdmin } = useAuth()
 
   const [form, setForm] = useState(DEFAULT_FORM)
   const [loading, setLoading] = useState(isEdit)
@@ -218,7 +220,7 @@ export function VisitaForm() {
         )}
 
         <div className="flex justify-between gap-3">
-          {isEdit && (
+          {isEdit && isAdmin && (
             <Button type="button" variant="destructive" onClick={handleDelete} disabled={deleting}>
               {deleting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Trash2 className="w-4 h-4 mr-2" />}
               Eliminar visita

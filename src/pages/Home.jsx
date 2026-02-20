@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Plus, Loader2, UtensilsCrossed } from 'lucide-react'
+import { Plus, Loader2, UtensilsCrossed, LogOut, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { VisitaCard } from '@/components/VisitaCard'
+import { AdminDialog } from '@/components/AdminDialog'
+import { useAuth } from '@/context/AuthContext'
 import { api } from '@/api/client'
 
 export function Home() {
+  const { isAdmin, logout } = useAuth()
+  const [showAdminDialog, setShowAdminDialog] = useState(false)
   const [visitas, setVisitas] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -27,12 +31,27 @@ export function Home() {
           </div>
           <img src="/portada_2.jpg" alt="Amenudo" className="w-100 h-100 rounded-lg py-15" />
         </div>
-        <Button asChild>
-          <Link to="/visitas/nueva">
-            <Plus className="w-4 h-4 mr-1" /> Nueva visita
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          {isAdmin ? (
+            <>
+              <Button asChild>
+                <Link to="/visitas/nueva">
+                  <Plus className="w-4 h-4 mr-1" /> Nueva visita
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" title="Cerrar sesión" onClick={logout}>
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </>
+          ) : (
+            <Button variant="outline" onClick={() => setShowAdminDialog(true)}>
+              <ShieldCheck className="w-4 h-4 mr-1" /> Admin
+            </Button>
+          )}
+        </div>
       </div>
+
+      {showAdminDialog && <AdminDialog onClose={() => setShowAdminDialog(false)} />}
 
       {loading && (
         <div className="flex justify-center py-20">

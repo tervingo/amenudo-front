@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom'
 import { Calendar, Star, Eye, Pencil } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/context/AuthContext'
 
 export function VisitaCard({ visita }) {
+  const { isAdmin } = useAuth()
   const foto = visita.fotos?.[0]
 
   return (
@@ -31,9 +33,11 @@ export function VisitaCard({ visita }) {
           <Button variant="ghost" size="icon" asChild title="Ver visita">
             <Link to={`/visitas/${visita._id}`}><Eye className="w-4 h-4" /></Link>
           </Button>
-          <Button variant="ghost" size="icon" asChild title="Editar visita">
-            <Link to={`/visitas/${visita._id}/editar`}><Pencil className="w-4 h-4" /></Link>
-          </Button>
+          {isAdmin && (
+            <Button variant="ghost" size="icon" asChild title="Editar visita">
+              <Link to={`/visitas/${visita._id}/editar`}><Pencil className="w-4 h-4" /></Link>
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>

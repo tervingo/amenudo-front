@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { api } from '@/api/client'
+import { useAuth } from '@/context/AuthContext'
 
 function ScoreCircle({ label, value, highlight }) {
   return (
@@ -21,6 +22,7 @@ function ScoreCircle({ label, value, highlight }) {
 
 export function DetalleVisita() {
   const { id } = useParams()
+  const { isAdmin } = useAuth()
   const [visita, setVisita] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -62,11 +64,13 @@ export function DetalleVisita() {
             )}
           </div>
         </div>
-        <Button variant="outline" size="sm" asChild>
-          <Link to={`/visitas/${id}/editar`}>
-            <Pencil className="w-3.5 h-3.5 mr-1" /> Editar
-          </Link>
-        </Button>
+        {isAdmin && (
+          <Button variant="outline" size="sm" asChild>
+            <Link to={`/visitas/${id}/editar`}>
+              <Pencil className="w-3.5 h-3.5 mr-1" /> Editar
+            </Link>
+          </Button>
+        )}
       </div>
 
       {/* Fotos */}

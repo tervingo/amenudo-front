@@ -24,12 +24,15 @@ export function Home() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
       <div className="flex items-start justify-between">
-        <div className="flex flex-col gap-3">
+        <div className="flex items-center flex-col gap-3">
           <div className="flex items-center gap-2">
             <UtensilsCrossed className="w-10 h-10" />
             <h1 className="text-7xl font-bold">Amenudo</h1>
           </div>
-          <img src="/portada_2.jpg" alt="Amenudo" className="w-100 h-100 rounded-lg py-15" />
+            <img src="/portada_1.jpg" alt="Amenudo" className="w-100 h-100 rounded-lg py-10" />
+          <div className="text-lg text-gray-500 text-center px-40 py-10">
+            <p>Amenudo es un blog creado por un grupo de amigos ya jubilados que, en vez de irse a ver obras o jugar a la petanca, dedican un día al mes a visitar un restaurante del área de Barcelona con un menú de mediodía atractivo.</p>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" title="Cambiar tema" onClick={toggleTheme}>

@@ -17,7 +17,7 @@ export function VisitaCalendar({ visitas }) {
   }
 
   return (
-    <div className="shrink-0 w-80 space-y-0">
+    <div className="w-full md:w-80 md:shrink-0 space-y-0">
       {years.map((year, i) => (
         <div key={year} className={i > 0 ? 'border-t border-border pt-4 mt-4' : 'pb-4'}>
           <h3 className="text-lg font-bold uppercase tracking-widest text-muted-foreground mb-2">

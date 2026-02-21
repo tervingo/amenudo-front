@@ -33,7 +33,7 @@ export function Home() {
             <h1 className="text-7xl font-bold">Amenudo</h1>
           </div>
           <img src="/portada_1.jpg" alt="Amenudo" className="w-100 h-100 rounded-lg py-10" />
-          <div className="text-lg text-gray-500 text-center px-30 py-10">
+          <div className="text-lg text-gray-500 text-center px-2 sm:px-16 md:px-30 py-10">
             <p><b>Amenudo</b> es un blog creado por un grupo de amigos ya jubilados que, en vez de irse a ver obras o jugar a la petanca, dedican un día al mes a visitar un restaurante del Área Metropolitana de Barcelona con un menú de mediodía atractivo.</p>
           </div>
         </div>
@@ -63,7 +63,7 @@ export function Home() {
       {showAdminDialog && <AdminDialog onClose={() => setShowAdminDialog(false)} />}
 
       {/* Content: calendar + cards */}
-      <div className="flex gap-6 items-start">
+      <div className="flex flex-col gap-6 md:flex-row md:items-start">
 
         {/* Left: calendar */}
         <VisitaCalendar visitas={visitas} />

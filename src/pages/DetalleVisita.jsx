@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Pencil, Loader2, Calendar, Users, Star } from 'lucide-react'
+import { ArrowLeft, Pencil, Loader2, Calendar, Users, Star, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -26,6 +26,7 @@ export function DetalleVisita() {
   const [visita, setVisita] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [lightbox, setLightbox] = useState(null)
 
   useEffect(() => {
     api.getVisita(id)
@@ -33,6 +34,13 @@ export function DetalleVisita() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [id])
+
+  useEffect(() => {
+    if (!lightbox) return
+    const onKey = (e) => { if (e.key === 'Escape') setLightbox(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [lightbox])
 
   if (loading) {
     return (
@@ -81,7 +89,8 @@ export function DetalleVisita() {
               key={f.public_id}
               src={f.url}
               alt="foto"
-              className="w-full h-36 object-cover rounded-md"
+              className="w-full h-36 object-cover rounded-md cursor-zoom-in"
+              onClick={() => setLightbox(f.url)}
             />
           ))}
         </div>
@@ -132,7 +141,8 @@ export function DetalleVisita() {
               <img
                 src={visita.menu.foto.url}
                 alt="menú"
-                className="w-full max-h-64 object-contain rounded-md border"
+                className="w-full max-h-64 object-contain rounded-md border cursor-zoom-in"
+                onClick={() => setLightbox(visita.menu.foto.url)}
               />
             )}
             {visita.menu.descripcion && (
@@ -163,6 +173,27 @@ export function DetalleVisita() {
             <p className="text-sm leading-relaxed whitespace-pre-wrap">{visita.comentario}</p>
           </CardContent>
         </Card>
+      )}
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            className="absolute top-4 right-4 text-white/70 hover:text-white"
+            onClick={() => setLightbox(null)}
+          >
+            <X className="w-7 h-7" />
+          </button>
+          <img
+            src={lightbox}
+            alt="foto ampliada"
+            className="max-w-[90vw] max-h-[90vh] object-contain rounded-md"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
       )}
     </div>
   )

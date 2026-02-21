@@ -6,7 +6,7 @@ const START_YEAR = 2023
 export function VisitaCalendar({ visitas }) {
   const currentYear = new Date().getFullYear()
   const years = []
-  for (let y = START_YEAR; y <= currentYear; y++) years.push(y)
+  for (let y = currentYear; y >= START_YEAR; y--) years.push(y)
 
   const byMonth = {}
   for (const v of visitas) {

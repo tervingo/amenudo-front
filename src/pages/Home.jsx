@@ -4,6 +4,7 @@ import { Plus, Loader2, UtensilsCrossed, LogOut, ShieldCheck, Sun, Moon } from '
 import { Button } from '@/components/ui/button'
 import { VisitaCard } from '@/components/VisitaCard'
 import { VisitaCalendar } from '@/components/VisitaCalendar'
+import { VisitasMapa } from '@/components/VisitasMapa'
 import { AdminDialog } from '@/components/AdminDialog'
 import { useAuth } from '@/context/AuthContext'
 import { api } from '@/api/client'
@@ -23,7 +24,7 @@ export function Home() {
   }, [])
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
 
       {/* Header */}
       <div className="flex items-start justify-between">
@@ -68,7 +69,7 @@ export function Home() {
         {/* Left: calendar */}
         <VisitaCalendar visitas={visitas} />
 
-        {/* Right: cards grid */}
+        {/* Center: cards grid */}
         <div className="flex-1 min-w-0">
           {loading && (
             <div className="flex justify-center py-20">
@@ -100,6 +101,9 @@ export function Home() {
             </div>
           )}
         </div>
+
+        {/* Right: map */}
+        <VisitasMapa visitas={visitas} />
       </div>
     </div>
   )

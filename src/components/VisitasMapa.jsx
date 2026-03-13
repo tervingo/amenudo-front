@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -70,7 +71,7 @@ export function VisitasMapa({ visitas }) {
             <Popup>
               <strong>{v.sitio}</strong><br />
               {new Date(v.fecha).toLocaleDateString('es-ES')}<br />
-              <a href={`/visitas/${v._id}`} style={{ color: 'navy' }}>Ver visita →</a>
+              <Link to={`/visitas/${v._id}`} style={{ color: 'navy' }}>Ver visita →</Link>
             </Popup>
           </Marker>
         ))}

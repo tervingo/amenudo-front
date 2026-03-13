@@ -126,6 +126,21 @@ export function DetalleVisita() {
         </p>
       )}
 
+      {/* Mapa */}
+      {visita.dirección && import.meta.env.VITE_MAPS_KEY && (
+        <div className="rounded-md overflow-hidden border border-border h-52">
+          <iframe
+            title="Ubicación"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            loading="lazy"
+            allowFullScreen
+            src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_MAPS_KEY}&q=${encodeURIComponent(visita.dirección)}&language=es`}
+          />
+        </div>
+      )}
+
       {(visita.menu?.foto || visita.menu?.descripcion || visita.menu?.precio != null) && (
         <Card>
           <CardHeader>
